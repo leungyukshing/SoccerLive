@@ -78,7 +78,7 @@ export default class Manager {
                 hoverContent.push(score.format(config("format")))
             });
         }
-
+        hoverContent.push("\n");
         hoverContent.push(this.humanLastUpdated());
         return hoverContent.join("\n");
     }

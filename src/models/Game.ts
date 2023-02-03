@@ -1,4 +1,5 @@
 import Team from "./Team";
+import Status from "./Status";
 
 export default interface Game {
     id: number,
@@ -9,5 +10,6 @@ export default interface Game {
     away: Team,
     statusId: number,
     tournamentStage?: string,
+    status: Status,
     timeTS: number,
 }

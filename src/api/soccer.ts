@@ -1,6 +1,7 @@
 import axios from "axios";
 import Game from "../models/Game";
 import Team from "../models/Team";
+import Status from "../models/Status";
 
 const baseURL: Readonly<string> = "https://www.fotmob.com/api"; // TODO
 const HEADERS = {
@@ -24,7 +25,7 @@ export function fetchGames(): Promise<Game[][]> {
             // return data.scoreboard.games;
             return data.leagues.map((l: { id: number, ccode: string, name: string, matches: any;}) => {
                 //console.log("each leagues: " + l);
-                return l.matches.map((m: {id: number, home: Team, away: Team, statusId: number, timeTS: number;} ) => {
+                return l.matches.map((m: {id: number, home: Team, away: Team, statusId: number, status: Status, timeTS: number;} ) => {
                     //console.log("each match: " + m);
                     return {
                         id: m.id,
@@ -34,6 +35,7 @@ export function fetchGames(): Promise<Game[][]> {
                         home: m.home,
                         away: m.away,
                         statusId: m.statusId,
+                        status: m.status,
                         timeTS: m.timeTS
                     }
                 });

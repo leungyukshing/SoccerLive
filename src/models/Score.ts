@@ -9,6 +9,7 @@ export default class Score {
     awayScore: number;
     awayTeamName: string;
     tipoff: moment.Moment;
+    liveTime: string;
     url: string;
     urlLive: boolean;
 
@@ -21,9 +22,10 @@ export default class Score {
         this.awayTeamName = game.away.name;
         this.tipoff = moment(game.timeTS);
 
-        this.url = "";
+        this.url = "https://www.fotmob.com/" + `match/${this.gameId}/matchfacts`;
         this.urlLive = moment() >= this.tipoff;
 
+        this.liveTime = game.status.liveTime.long;
         // this.status = this.buildStatus(game);
     }
 
@@ -34,6 +36,7 @@ export default class Score {
             .replace(/\${vScore}/gi, this.awayScore.toString(10))
             .replace(/\${hTeam}/gi, this.homeTeamName)
             .replace(/\${hScore}/gi, this.homeScore.toString(10))
+            .replace(/\${liveTime}/gi, this.liveTime)
     }
 
     // Determine status string.
