@@ -17,9 +17,40 @@
     "commands": [
       {
         "command": "soccerlive.helloWorld",
-        "title": "Hello World"
+        "title": "Live Game"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "SoccerLive Configuraiton",
+      "properties": {
+        "soccer-live.format": {
+          "markdownDescription": "Specifies how the game info should be displayed. Defaults to `\"${vTeam} ${vScore} : ${hScore} ${hTeam}, ${status}\"`, which looks like `GSW 42 : 24 LAL, 4:20 1st`. The available wildcards are:\n- `${vTeam}`: The visiting team's abbreviated name, (e.g. `\"GSW\"`)\n- `${vScore}`: The visiting team's score\n- `${hTeam}`: The home team's abbreviated name, (e.g. `\"LAL\"`)\n- `${hScore}`: The home team's score\n- `${status}`: The status of the game\n  - If the game hasn't started yet, this will be the scheduled start time (e.g. `\"9:30 PM\"`) in your local UTC offset.\n  - If the game is ongoing, this will be either `\"<TIME LEFT IN PERIOD> <PERIOD>\"` (e.g. `\"4:20 1st\"`), `\"End of 1st\"`, or `\"Halftime\"`\n  - If the game is over, this will be `\"Final\"`\n  - If the status is unknown, this will be `\"TBD\"`",
+          "type": "string",
+          "default": "${vTeam} ${vScore} - ${hScore} ${hTeam}"
+        },
+        "soccer-live.hover": {
+          "markdownDescription": "Specifies what to show when hovering over the ticker. Options are `\"details\"` (details about the current game) or `\"scoreboard\"` (all scores).",
+          "type": "string",
+          "enum": [
+            "details",
+            "scoreboard"
+          ],
+          "default": "scoreboard"
+        },
+        "soccer-live.tickerDelaySeconds": {
+          "type": "number",
+          "default": 10,
+          "minimum": 1,
+          "maximum": 60
+        },
+        "soccer-live.pollDelaySeconds": {
+          "type": "number",
+          "default": 60,
+          "minimum": 10,
+          "maximum": 600
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -30,16 +61,20 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.74.0",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-electron": "^2.2.0",
     "eslint": "^8.28.0",
     "glob": "^8.0.3",
     "mocha": "^10.1.0",
-    "typescript": "^4.9.3",
-    "@vscode/test-electron": "^2.2.0"
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "axios": "^1.3.0",
+    "moment": "^2.29.4"
   }
 }
