@@ -5,7 +5,6 @@ import { fetchGames } from "./api/soccer";
 import { config } from "./extension";
 
 export function fetchScores(manager: Manager): Promise<Manager> {
-    //const teamFilter = config("teamFilter") || [];
     // TODO: validate setting and use default
     var leaguesStr = config("includedLeague");
     // console.log("leaguesStr: " + leaguesStr);
@@ -28,13 +27,6 @@ export function fetchScores(manager: Manager): Promise<Manager> {
                 result.push(...game);
             })
             // console.log(result);
-      /*
-            if (teamFilter.length > 0) {
-                games = games.filter((game) => {
-                    return teamFilter.includes(game.homeTeam.teamTricode) || teamFilter.includes(game.awayTeam.teamTricode);
-                });
-            }
-*/
             result = result.filter(function(item) {
                 
                 // console.log(leagueArr);

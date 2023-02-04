@@ -8,8 +8,6 @@ export default interface Game {
     leagueName: string,
     home: Team,
     away: Team,
-    statusId: number,
-    tournamentStage?: string,
     status: Status,
     timeTS: number,
 }

@@ -37,7 +37,7 @@ export default class Manager {
                 command: "vscode.open",
                 arguments: [Uri.parse(score.url)],
             } : null;
-            console.log(score);
+            // console.log(score);
             this.setTicker(score.format(config("format")), this.getHover(), command);
             this.incrementPos();
         } else if (this.ticker) {

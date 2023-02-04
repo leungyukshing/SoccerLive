@@ -3,52 +3,60 @@ import Game from "../models/Game";
 import Team from "../models/Team";
 import Status from "../models/Status";
 import Detail from "../models/Detail";
-import { env } from "process";
-import { time } from "console";
 
-const baseURL: Readonly<string> = "https://www.fotmob.com/api"; // TODO
+const baseURL: Readonly<string> = "https://www.fotmob.com/api";
+const matchesUrl: Readonly<string> = "/matches?";
+const matchDetailsUrl: Readonly<string> = "/matchDetails?";
 const HEADERS = {
     "Content-Type": "application/json"
 };
 
 export function fetchGameDetails(matchId: number): Promise<void | Detail[]> {
     console.log("fetchGameDetails start...");
-    var url = baseURL + "/matchDetails?" + `matchId=${matchId}`;
+    var url = baseURL + matchDetailsUrl + `matchId=${matchId}`;
     console.log("url: " + url);
     return axios.get(url, { headers: HEADERS })
         .then(({ status, statusText, data }) => {
             console.log(`GET ${url} ${status} ${statusText}`);
             var events = data.header.events;
-            console.log(events);
+            // console.log(events);
+            if (!events) {
+                return;
+            }
             let homeTeamGoals = events.homeTeamGoals;
             let awayTeamGoals = events.awayTeamGoals;
-            console.log(homeTeamGoals);
-            console.log(awayTeamGoals);
-            let homeTeamGoalsJson = JSON.parse(JSON.stringify(homeTeamGoals));
-            let awayTeamGoalsJson = JSON.parse(JSON.stringify(awayTeamGoals));
-            console.log(homeTeamGoalsJson);
+            // console.log(homeTeamGoals);
+            // console.log(awayTeamGoals);
             let details : Detail[] = [];
-            Object.keys(homeTeamGoalsJson).forEach(function(key) {
-                console.log(key);
-                let goals = homeTeamGoalsJson[key];
-                console.log(goals);
-                goals.forEach((element: { nameStr: string; time: number; type: string; goalDescription: string; }) => {
-                    details.push(new Detail(1, element.nameStr, element.time, element.type, element.goalDescription));
-                });``
-            });
 
-            Object.keys(awayTeamGoalsJson).forEach(function(key) {
-                let goals = awayTeamGoalsJson[key];
-                goals.forEach((element: { nameStr: string; time: number; type: string; desc: string; }) => {
-                    details.push(new Detail(2, element.nameStr, element.time, element.type, element.desc));
-                });``
-            });
-            
+            if (homeTeamGoals) {
+                let homeTeamGoalsJson = JSON.parse(JSON.stringify(homeTeamGoals));
+                Object.keys(homeTeamGoalsJson).forEach(function(key) {
+                    // console.log(key);
+                    let goals = homeTeamGoalsJson[key];
+                    // console.log(goals);
+                    goals.forEach((element: { nameStr: string; time: number; type: string; goalDescription: string; }) => {
+                        details.push(new Detail(1, element.nameStr, element.time, element.type, element.goalDescription));
+                    });``
+                });
+            }
+            if (awayTeamGoals) {
+                let awayTeamGoalsJson = JSON.parse(JSON.stringify(awayTeamGoals));
+                Object.keys(awayTeamGoalsJson).forEach(function(key) {
+                    let goals = awayTeamGoalsJson[key];
+                    goals.forEach((element: { nameStr: string; time: number; type: string; desc: string; }) => {
+                        details.push(new Detail(2, element.nameStr, element.time, element.type, element.desc));
+                    });``
+                });
+            }
+            // console.log(homeTeamGoalsJson);
+
+            // sort events based on time
             details.sort((a, b) => {
                 return a.time - b.time;
             })
 
-            console.log(details);
+            // console.log(details);
             return details;            
         })
         .catch((error) => {
@@ -64,17 +72,16 @@ export function fetchGames(): Promise<Game[][]> {
     var yyyy = today.getFullYear();
 
     var date = yyyy + mm + dd;
-    var url = baseURL + "/matches?" + `date=${date}`;
+    var url = baseURL + matchesUrl + `date=${date}`;
     console.log("url: " + url);
     return axios.get(url, { headers: HEADERS })
         .then(({ status, statusText, data }) => {
             console.log(`GET ${url} ${status} ${statusText}`);
             // console.log(data);
-            // return data.scoreboard.games;
             return data.leagues.map((l: { id: number, ccode: string, name: string, matches: any;}) => {
-                //console.log("each leagues: " + l);
+                // console.log("each leagues: " + l);
                 return l.matches.map((m: {id: number, home: Team, away: Team, statusId: number, status: Status, timeTS: number;} ) => {
-                    //console.log("each match: " + m);
+                    // console.log("each match: " + m);
                     return {
                         id: m.id,
                         leagueId: l.id,

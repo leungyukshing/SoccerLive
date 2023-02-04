@@ -2,7 +2,6 @@ import * as moment from "moment";
 import Game from "./Game";
 import { fetchGameDetails } from "../api/soccer";
 import Detail from "./Detail";
-import { runInThisContext } from "vm";
 import { config } from "../extension";
 
 export default class Score {
@@ -30,7 +29,6 @@ export default class Score {
         this.urlLive = moment() >= this.tipoff;
 
         this.liveTime = game.status.liveTime.long;
-        // this.status = this.buildStatus(game);
         fetchGameDetails(this.gameId).then(details => {
             this.details = details;
         });
@@ -45,21 +43,6 @@ export default class Score {
             .replace(/\${hScore}/gi, this.homeScore.toString(10))
             .replace(/\${liveTime}/gi, this.liveTime)
     }
-
-    // Determine status string.
-    /*
-    buildStatus(game: Game): string {
-        if (this.tipoff) {
-            if (moment() < this.tipoff || game.period < 1) {
-                return this.tipoff.format("h:mm A");
-            } else {
-                return game.gameStatusText;
-            }
-        } else {
-            return "TBD";
-        }
-    }
-    */
 
     formatDetail(foramtString: string, detail: Detail): string {
         return foramtString
@@ -77,7 +60,7 @@ export default class Score {
                 result += this.formatDetail(config("detailFormat"), element) + "\n";
             });
         }
-        console.log(result);
+        // console.log(result);
         return result;
     }
 }
