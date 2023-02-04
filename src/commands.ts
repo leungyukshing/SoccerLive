@@ -2,9 +2,24 @@ import Manager from "./models/Manager";
 import Game from "./models/Game";
 import Score from "./models/Score";
 import { fetchGames } from "./api/soccer";
+import { config } from "./extension";
 
 export function fetchScores(manager: Manager): Promise<Manager> {
     //const teamFilter = config("teamFilter") || [];
+    // TODO: validate setting and use default
+    var leaguesStr = config("includedLeague");
+    // console.log("leaguesStr: " + leaguesStr);
+    var leagueArr = leaguesStr.split(",");
+    // console.log(leagueArr);
+    leagueArr.forEach((val: string, index: any) => {
+        leagueArr[index] = +(val.trim());
+    });
+    leagueArr = leagueArr.filter(function(str: string) {
+        return str !== "";
+    });
+
+    // console.log(leagueArr);
+
     return fetchGames()
         .then((games) => {
             console.log("In fetchScores, games: ");
@@ -21,11 +36,13 @@ export function fetchScores(manager: Manager): Promise<Manager> {
             }
 */
             result = result.filter(function(item) {
+                
+                // console.log(leagueArr);
                 // 42 -> Champions League
                 // 47 -> Premier League
                 // 87 -> LaLiga
                 // 54 -> Bundesliga
-                return [47, 87, 42, 54].includes(item.leagueId); // filter matches in England
+                return leagueArr.includes(item.leagueId); // filter matches based on configurationq
             });
             
             result = result.filter(function(item) {

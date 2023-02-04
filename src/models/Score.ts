@@ -1,9 +1,13 @@
 import * as moment from "moment";
 import Game from "./Game";
+import { fetchGameDetails } from "../api/soccer";
+import Detail from "./Detail";
+import { runInThisContext } from "vm";
+import { config } from "../extension";
 
 export default class Score {
     gameId: number;
-    details: string[] = [];
+    details: void | Detail[] = [];
     homeScore: number;
     homeTeamName: string;
     awayScore: number;
@@ -27,6 +31,9 @@ export default class Score {
 
         this.liveTime = game.status.liveTime.long;
         // this.status = this.buildStatus(game);
+        fetchGameDetails(this.gameId).then(details => {
+            this.details = details;
+        });
     }
 
     format(formatString: string): string {
@@ -53,4 +60,24 @@ export default class Score {
         }
     }
     */
+
+    formatDetail(foramtString: string, detail: Detail): string {
+        return foramtString
+        .replace(/\${time}/gi, detail.time.toString())
+        .replace(/\${team}/gi, detail.team == 1 ? this.homeTeamName : this.awayTeamName)
+        .replace(/\${player}/gi, detail.player)
+        .replace(/\${type}/gi, detail.type)
+        .replace(/\${desc}/gi, detail.desc ? detail.desc : "None")
+    }
+
+    getDetail(): string {
+        var result: string = "";
+        if (this.details) {
+            this.details.forEach(element => {
+                result += this.formatDetail(config("detailFormat"), element) + "\n";
+            });
+        }
+        console.log(result);
+        return result;
+    }
 }

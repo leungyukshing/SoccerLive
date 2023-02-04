@@ -72,7 +72,7 @@ export default class Manager {
         const hoverContent : string[] = [];
         console.log("getHover start");
         if (config("hover") == "details") {
-            hoverContent.push(...this.currenScore().details);
+            hoverContent.push(this.currenScore().getDetail());
         } else if (config("hover") == "scoreboard") {
             this.scores.forEach((score) => {
                 hoverContent.push(score.format(config("format")))

@@ -23,10 +23,20 @@
     "configuration": {
       "title": "SoccerLive Configuraiton",
       "properties": {
-        "soccer-live.format": {
-          "markdownDescription": "Specifies how the game info should be displayed. Defaults to `\"${hTeam} ${hScore} : ${vScore} ${vTeam} ${liveTime}\"`, which looks like `GSW 42 : 24 LAL, 4:20 1st`. The available wildcards are:\n- `${vTeam}`: The visiting team's abbreviated name, (e.g. `\"GSW\"`)\n- `${vScore}`: The visiting team's score\n- `${hTeam}`: The home team's abbreviated name, (e.g. `\"LAL\"`)\n- `${hScore}`: The home team's score\n- `${status}`: The status of the game\n  - If the game hasn't started yet, this will be the scheduled start time (e.g. `\"9:30 PM\"`) in your local UTC offset.\n  - If the game is ongoing, this will be either `\"<TIME LEFT IN PERIOD> <PERIOD>\"` (e.g. `\"4:20 1st\"`), `\"End of 1st\"`, or `\"Halftime\"`\n  - If the game is over, this will be `\"Final\"`\n  - If the status is unknown, this will be `\"TBD\"`",
+        "soccer-live.includedLeague": {
+          "markdownDescription": "Specifies which league info should be displayed. Defaults to \"42, 47, 54, 87\".\nCode Table:",
           "type": "string",
-          "default": "${hTeam} ${hScore} - ${vScore} ${vTeam} ${liveTime}"
+          "default": "42, 47, 54, 87"
+        },
+        "soccer-live.format": {
+          "markdownDescription": "Specifies how the game info should be displayed. Defaults to `\"${hTeam} ${hScore} : ${vScore} ${vTeam}, ${liveTime}\"`, which looks like `Man United 2 : 1 Crystal Palace, 21:48`. The available wildcards are:\n- `${hTeam}`: The home team's abbreviated name, (e.g. `\"Man United\"`)\n- `${hScore}`: The home team's score\n- `${vTeam}`: The visiting team's abbreviated name, (e.g. `\"Crystal Palace\"`)\n- `${vScore}`: The visiting team's score\n- `${status}`: The live time of the game\n`",
+          "type": "string",
+          "default": "${hTeam} ${hScore} - ${vScore} ${vTeam}, ${liveTime}"
+        },
+        "soccer-live.detailFormat": {
+          "markdownDescription": "Specifies how the game detail should be displayed. Defaults to `\"${time}'  (${team}) ${player} ${type} (${desc})\"`, which looks like `34'  (home) Messi (Long Shoot)`. The available wildcards are:\n- `${time}`: The event time.\n- `${team}`: The event team\n- `${player}`: The player involved in the event\n- `${type}`: The type of event, (e.g. \"Goal\")\n- `${desc}`: The description of the event. (e.g, \"Header\")\n",
+          "type": "string",
+          "default": "${time}'  (${team}) ${player} ${type} (${desc})"
         },
         "soccer-live.hover": {
           "markdownDescription": "Specifies what to show when hovering over the ticker. Options are `\"details\"` (details about the current game) or `\"scoreboard\"` (all scores).",
@@ -39,14 +49,14 @@
         },
         "soccer-live.tickerDelaySeconds": {
           "type": "number",
-          "default": 10,
+          "default": 5,
           "minimum": 1,
           "maximum": 60
         },
         "soccer-live.pollDelaySeconds": {
           "type": "number",
-          "default": 60,
-          "minimum": 10,
+          "default": 120,
+          "minimum": 30,
           "maximum": 600
         }
       }
