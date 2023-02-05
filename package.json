@@ -24,7 +24,7 @@
       "title": "SoccerLive Configuraiton",
       "properties": {
         "soccer-live.includedLeague": {
-          "markdownDescription": "Specifies which league info should be displayed. Defaults to \"42, 47, 54, 87\".\nCode Table:",
+          "markdownDescription": "Specifies which league info should be displayed. Defaults to \"42, 47, 54, 87\".\n Code Table:\n- `Champions League` -> `42`\n- `Premier League` -> `47`\n- `Bundesliga` -> `54`\n- `LaLiga` -> `87`\n- `Serie A` -> `55`\n- `Europa League` -> `73`\n- `Ligue 1` -> `53`\n- `FA Cup` -> `132`",
           "type": "string",
           "default": "42, 47, 54, 87"
         },
