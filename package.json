@@ -6,6 +6,8 @@
   "engines": {
     "vscode": "^1.74.0"
   },
+  "publisher": "leungyukshing",
+  "license": "See license in LICENSE.",
   "categories": [
     "Other"
   ],
