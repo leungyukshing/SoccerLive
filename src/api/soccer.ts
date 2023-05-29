@@ -19,25 +19,25 @@ export function fetchGameDetails(matchId: number): Promise<void | Detail[]> {
         .then(({ status, statusText, data }) => {
             console.log(`GET ${url} ${status} ${statusText}`);
             var events = data.header.events;
-            // console.log(events);
+            // console.debug(events);
             if (!events) {
                 return;
             }
             let homeTeamGoals = events.homeTeamGoals;
             let awayTeamGoals = events.awayTeamGoals;
-            // console.log(homeTeamGoals);
-            // console.log(awayTeamGoals);
+            // console.debug(homeTeamGoals);
+            // console.debug(awayTeamGoals);
             let details : Detail[] = [];
 
             if (homeTeamGoals) {
                 let homeTeamGoalsJson = JSON.parse(JSON.stringify(homeTeamGoals));
                 Object.keys(homeTeamGoalsJson).forEach(function(key) {
-                    // console.log(key);
+                    // console.debug(key);
                     let goals = homeTeamGoalsJson[key];
-                    // console.log(goals);
+                    // console.debug(goals);
                     goals.forEach((element: { nameStr: string; time: number; type: string; goalDescription: string; }) => {
                         details.push(new Detail(1, element.nameStr, element.time, element.type, element.goalDescription));
-                    });``
+                    });
                 });
             }
             if (awayTeamGoals) {
@@ -46,26 +46,26 @@ export function fetchGameDetails(matchId: number): Promise<void | Detail[]> {
                     let goals = awayTeamGoalsJson[key];
                     goals.forEach((element: { nameStr: string; time: number; type: string; desc: string; }) => {
                         details.push(new Detail(2, element.nameStr, element.time, element.type, element.desc));
-                    });``
+                    });
                 });
             }
-            // console.log(homeTeamGoalsJson);
+            // console.debug(homeTeamGoalsJson);
 
             // sort events based on time
             details.sort((a, b) => {
                 return a.time - b.time;
-            })
+            });
 
-            // console.log(details);
+            // console.debug(details);
             return details;            
         })
         .catch((error) => {
             console.error(error); 
-        })
+        });
 }
 
 export function fetchGames(): Promise<Game[][]> {
-    console.log("fetchGames start...");
+    console.debug("fetchGames start...");
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -73,15 +73,15 @@ export function fetchGames(): Promise<Game[][]> {
 
     var date = yyyy + mm + dd;
     var url = baseURL + matchesUrl + `date=${date}`;
-    console.log("url: " + url);
+    console.debug("url: " + url);
     return axios.get(url, { headers: HEADERS })
         .then(({ status, statusText, data }) => {
-            console.log(`GET ${url} ${status} ${statusText}`);
-            // console.log(data);
+            console.debug(`GET ${url} ${status} ${statusText}`);
+            // console.debug(data);
             return data.leagues.map((l: { id: number, ccode: string, name: string, matches: any;}) => {
-                // console.log("each leagues: " + l);
+                // console.debug("each leagues: " + l);
                 return l.matches.map((m: {id: number, home: Team, away: Team, statusId: number, status: Status, timeTS: number;} ) => {
-                    // console.log("each match: " + m);
+                    // console.debug("each match: " + m);
                     return {
                         id: m.id,
                         leagueId: l.id,
@@ -92,11 +92,11 @@ export function fetchGames(): Promise<Game[][]> {
                         statusId: m.statusId,
                         status: m.status,
                         timeTS: m.timeTS
-                    }
+                    };
                 });
             });
         })
         .catch((error) => {
             console.error(error);
-        })
+        });
 }

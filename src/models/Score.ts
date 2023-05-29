@@ -41,16 +41,16 @@ export default class Score {
             .replace(/\${vScore}/gi, this.awayScore.toString(10))
             .replace(/\${hTeam}/gi, this.homeTeamName)
             .replace(/\${hScore}/gi, this.homeScore.toString(10))
-            .replace(/\${liveTime}/gi, this.liveTime)
+            .replace(/\${liveTime}/gi, this.liveTime);
     }
 
     formatDetail(foramtString: string, detail: Detail): string {
         return foramtString
         .replace(/\${time}/gi, detail.time.toString())
-        .replace(/\${team}/gi, detail.team == 1 ? this.homeTeamName : this.awayTeamName)
+        .replace(/\${team}/gi, detail.team === 1 ? this.homeTeamName : this.awayTeamName)
         .replace(/\${player}/gi, detail.player)
         .replace(/\${type}/gi, detail.type)
-        .replace(/\${desc}/gi, detail.desc ? detail.desc : "None")
+        .replace(/\${desc}/gi, detail.desc ? detail.desc : "None");
     }
 
     getDetail(): string {

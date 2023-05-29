@@ -37,18 +37,17 @@ export function activate(context: ExtensionContext) {
 		const result : Game[] = [];
 		games.forEach((game) => {
 			result.push(...game);
-		})
-		// console.log(result);
+		});
+		// console.debug(result);
 	});
 
-	// poll data
-	
+	// poll data	
 	tickerPoll(manager);
 	scoreboardPoll(manager);
 }
 
 function buildTicker(): StatusBarItem {
-	const alignment = config("side") == "left" ? StatusBarAlignment.Left : StatusBarAlignment.Right;
+	const alignment = config("side") === "left" ? StatusBarAlignment.Left : StatusBarAlignment.Right;
 	const priority = config("priority");
 	return window.createStatusBarItem(alignment, priority);
 }

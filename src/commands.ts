@@ -7,9 +7,9 @@ import { config } from "./extension";
 export function fetchScores(manager: Manager): Promise<Manager> {
     // TODO: validate setting and use default
     var leaguesStr = config("includedLeague");
-    // console.log("leaguesStr: " + leaguesStr);
+    // console.debug("leaguesStr: " + leaguesStr);
     var leagueArr = leaguesStr.split(",");
-    // console.log(leagueArr);
+    // console.debug(leagueArr);
     leagueArr.forEach((val: string, index: any) => {
         leagueArr[index] = +(val.trim());
     });
@@ -17,7 +17,7 @@ export function fetchScores(manager: Manager): Promise<Manager> {
         return str !== "";
     });
 
-    // console.log(leagueArr);
+    // console.debug(leagueArr);
 
     return fetchGames()
         .then((games) => {
@@ -25,11 +25,11 @@ export function fetchScores(manager: Manager): Promise<Manager> {
             var result : Game[] = [];
             games.forEach((game) => {
                 result.push(...game);
-            })
-            // console.log(result);
+            });
+            // console.debug(result);
             result = result.filter(function(item) {
                 
-                // console.log(leagueArr);
+                // console.debug(leagueArr);
                 // 42 -> Champions League
                 // 47 -> Premier League
                 // 87 -> LaLiga
@@ -40,28 +40,28 @@ export function fetchScores(manager: Manager): Promise<Manager> {
             result = result.filter(function(item) {
                 // filter live matches
                 return item.status.started && !item.status.finished;
-            })
-            // console.log(result);
+            });
+            // console.debug(result);
             return buildScores(result);
         })
         .then((newScores) => {
             console.log("start update scores");
-            // console.log(newScores);
+            // console.debug(newScores);
             manager.updateScores(newScores);
             return manager;
-        })
+        });
 }
 
 // Build a list of Scores from a list of Games
 function buildScores(games: Game[]): Score[] {
-    console.log("buildScores start.....");
-    // console.log(games);
+    console.debug("buildScores start.....");
+    // console.debug(games);
     return games.map((game) => new Score(game));
 }
 
 // Updates the ticker in the Status Bar
 export function updateTicker(manager: Manager): Manager {
-    console.log("updateTicker start......");
+    console.debug("updateTicker start......");
     manager.rollTicker();
     return manager;
 }
