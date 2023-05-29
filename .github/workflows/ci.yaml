@@ -76,4 +76,6 @@ jobs: # all jobs run in parallel
         run: npm ci
 
       - name: Run tests
-        run: npm run test
+        run: |
+          export DISPLAY=:99
+          npm run test
