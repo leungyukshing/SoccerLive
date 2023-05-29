@@ -78,4 +78,5 @@ jobs: # all jobs run in parallel
       - name: Run tests
         run: |
           export DISPLAY=:99
+          echo $DISPLAY
           npm run test
