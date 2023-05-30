@@ -1,4 +1,6 @@
-# soccerlive README
+# Soccerlive  [![Version](https://img.shields.io/visual-studio-marketplace/v/leungyukshing.soccerlive)](https://marketplace.visualstudio.com/items?itemName=leungyukshing.soccerlive) [![Installs](https://img.shields.io/visual-studio-marketplace/i/leungyukshing.soccerlive)](https://marketplace.visualstudio.com/items?itemName=leungyukshing.soccerlive)  [![CI](https://github.com/leungyukshing/SoccerLive/actions/workflows/ci.yaml/badge.svg)](https://github.com/leungyukshing/SoccerLive/actions/workflows/ci.yaml)
+
+<img src="https://raw.githubusercontent.com/VSCodeVim/Vim/master/images/icon.png" height="128">
 
 An amazing extension to keep you updated with the live score of soccer games when coding!
 
