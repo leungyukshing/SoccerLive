@@ -9,7 +9,7 @@ export function fetchScores(manager: Manager): Promise<Manager> {
     var leaguesStr = config("includedLeague");
     // console.debug("leaguesStr: " + leaguesStr);
     var leagueArr = leaguesStr.split(",");
-    // console.debug(leagueArr);
+    console.debug(leagueArr);
     leagueArr.forEach((val: string, index: any) => {
         leagueArr[index] = +(val.trim());
     });
@@ -17,11 +17,11 @@ export function fetchScores(manager: Manager): Promise<Manager> {
         return str !== "";
     });
 
-    // console.debug(leagueArr);
+    console.debug(leagueArr);
 
     return fetchGames()
         .then((games) => {
-            console.log("In fetchScores, games: ");
+            // console.debug("In fetchScores, games: ", games);
             var result : Game[] = [];
             games.forEach((game) => {
                 result.push(...game);
@@ -34,14 +34,15 @@ export function fetchScores(manager: Manager): Promise<Manager> {
                 // 47 -> Premier League
                 // 87 -> LaLiga
                 // 54 -> Bundesliga
-                return leagueArr.includes(item.leagueId); // filter matches based on configurationq
+                return leagueArr.includes(item.leagueId); // filter matches based on configuration
             });
+            console.debug("matches: ", result);
             
             result = result.filter(function(item) {
                 // filter live matches
                 return item.status.started && !item.status.finished;
             });
-            // console.debug(result);
+            console.debug("live matches: ", result.length);
             return buildScores(result);
         })
         .then((newScores) => {
