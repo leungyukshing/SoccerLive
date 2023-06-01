@@ -36,7 +36,6 @@ export function fetchScores(manager: Manager): Promise<Manager> {
                 // 54 -> Bundesliga
                 return leagueArr.includes(item.leagueId); // filter matches based on configuration
             });
-            console.debug("matches: ", result);
             
             result = result.filter(function(item) {
                 // filter live matches

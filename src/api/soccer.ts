@@ -66,8 +66,8 @@ export function fetchGameDetails(matchId: number): Promise<void | Detail[]> {
 
 export function fetchGames(): Promise<Game[][]> {
     console.debug("fetchGames start...");
-    var today = new Date();
-    today.setHours(today.getHours() + 6);
+    var today = new Date(new Date().toLocaleString("en-US", {timeZone: "Europe/Oslo"}));
+    console.debug("today: ", today);
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0');
     var yyyy = today.getFullYear();
