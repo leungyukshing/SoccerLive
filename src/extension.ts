@@ -21,7 +21,7 @@ export function activate(context: ExtensionContext) {
 	let disposable = commands.registerCommand('soccerlive.helloWorld', () => {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
-		window.setStatusBarMessage('Soccer Live is active!');
+		window.setStatusBarMessage('Soccer Live is active!', 5000);
 	});
 	
 	context.subscriptions.push(disposable);
