@@ -23,7 +23,7 @@ export default class Manager {
     updateScores(newScores: Score[]) {
         console.debug("old socres: ", this.scores);
         console.debug("newScores: ", newScores);
-        this.compareMatchDiff(this.scores, newScores);
+        // this.compareMatchDiff(this.scores, newScores);
         this.scores = newScores;
         this.lastUpdated = moment();
     }
