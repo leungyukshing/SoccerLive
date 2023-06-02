@@ -1,9 +1,10 @@
 # Change Log
 
-All notable changes to the "soccerlive" extension will be documented in this file.
+---
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## v1.0.0 (2023-05-28)
 
-## [Unreleased]
++ Initial release, including basic functionalities like displaying live soccer score.
 
-- Initial release
+
+
