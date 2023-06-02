@@ -3,7 +3,7 @@
   "displayName": "SoccerLive",
   "description": "an extension to get live soccer score",
   "icon": "images/soccer.png",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.74.0"
   },
