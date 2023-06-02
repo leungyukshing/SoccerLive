@@ -1,8 +1,6 @@
-# Soccerlive  [![Version](https://img.shields.io/visual-studio-marketplace/v/leungyukshing.soccerlive)](https://marketplace.visualstudio.com/items?itemName=leungyukshing.soccerlive) [![Installs](https://img.shields.io/visual-studio-marketplace/i/leungyukshing.soccerlive)](https://marketplace.visualstudio.com/items?itemName=leungyukshing.soccerlive)  [![CI](https://github.com/leungyukshing/SoccerLive/actions/workflows/ci.yaml/badge.svg)](https://github.com/leungyukshing/SoccerLive/actions/workflows/ci.yaml)
+# SoccerLive  [![Version](https://img.shields.io/visual-studio-marketplace/v/leungyukshing.soccerlive)](https://marketplace.visualstudio.com/items?itemName=leungyukshing.soccerlive) [![Installs](https://img.shields.io/visual-studio-marketplace/i/leungyukshing.soccerlive)](https://marketplace.visualstudio.com/items?itemName=leungyukshing.soccerlive)  [![CI](https://github.com/leungyukshing/SoccerLive/actions/workflows/ci.yaml/badge.svg)](https://github.com/leungyukshing/SoccerLive/actions/workflows/ci.yaml)
 
-<img src="https://raw.githubusercontent.com/leungyukshing/SoccerLive/master/images/football.png" height="128">
-
-
+<h2 align="center"><img src="https://raw.githubusercontent.com/leungyukshing/SoccerLive/master/images/football.png" height="128"><br>SoccerLive</h2>
 
 SoccerLive is an amazing extension to keep you updated with the live score of soccer games when coding with [Visual Studio Code](https://code.visualstudio.com/).
 
