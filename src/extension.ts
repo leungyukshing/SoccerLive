@@ -10,9 +10,9 @@ import Game from './models/Game';
 // Your extension is activated the very first time the command is executed
 export function activate(context: ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
+	// Use the console to output diagnostic information (console.debug) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "soccerlive" is now active!');
+	console.debug('Congratulations, your extension "soccerlive" is now active!');
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
@@ -22,6 +22,7 @@ export function activate(context: ExtensionContext) {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
 		window.setStatusBarMessage('Soccer Live is active!', 5000);
+		// window.showInformationMessage("activation msg is shown");
 	});
 	
 	context.subscriptions.push(disposable);
@@ -53,8 +54,8 @@ function buildTicker(): StatusBarItem {
 }
 
 function tickerPoll(manager: Manager): void {
-	console.log("tickerPoll");
-	console.log("config tickerDelaySeconds: " + config("tickerDelaySeconds"));
+	console.debug("tickerPoll");
+	console.debug("config tickerDelaySeconds: " + config("tickerDelaySeconds"));
 	commands.executeCommand("soccer-live.updateTicker", manager).then(
 		undefined, (e) => console.error(e.message)
 	);
@@ -64,8 +65,8 @@ function tickerPoll(manager: Manager): void {
 }
 
 function scoreboardPoll(manager: Manager): void {
-	console.log("scoreboardPoll");
-	console.log("config pollDelaySeconds: " + config("pollDelaySeconds"));
+	console.debug("scoreboardPoll");
+	console.debug("config pollDelaySeconds: " + config("pollDelaySeconds"));
 	commands.executeCommand("soccer-live.fetchScores", manager).then(
 		undefined, (e) => console.error(e.message)
 	);
@@ -79,5 +80,5 @@ export function config(setting: string) {
 }
 // This method is called when your extension is deactivated
 export function deactivate() {
-	console.log("Soccer Live deactived.");
+	console.debug("Soccer Live deactived.");
 }

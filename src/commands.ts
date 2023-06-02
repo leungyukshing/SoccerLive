@@ -45,7 +45,7 @@ export function fetchScores(manager: Manager): Promise<Manager> {
             return buildScores(result);
         })
         .then((newScores) => {
-            console.log("start update scores");
+            console.debug("start update scores");
             // console.debug(newScores);
             manager.updateScores(newScores);
             return manager;

@@ -1,4 +1,4 @@
-import { StatusBarItem, Command, Uri } from "vscode";
+import { StatusBarItem, Command, Uri, window } from "vscode";
 import {config} from "../extension";
 import * as moment from "moment";
 import Score from "./Score";
@@ -21,15 +21,18 @@ export default class Manager {
     }
 
     updateScores(newScores: Score[]) {
+        console.debug("old socres: ", this.scores);
+        console.debug("newScores: ", newScores);
+        this.compareMatchDiff(this.scores, newScores);
         this.scores = newScores;
         this.lastUpdated = moment();
     }
     
     rollTicker() {
-        console.log("rollTicker start");
-        // console.log(this.ticker);
-        console.log(this.scores.length);
-        // console.log(this.scores);
+        console.debug("rollTicker start");
+        // console.debug(this.ticker);
+        console.debug(this.scores.length);
+        // console.debug(this.scores);
         if (this.ticker && this.scores && this.scores.length > 0) {
             const score = this.currenScore();
             const command: Command | null = score.urlLive ? {
@@ -37,7 +40,7 @@ export default class Manager {
                 command: "vscode.open",
                 arguments: [Uri.parse(score.url)],
             } : null;
-            // console.log(score);
+            // console.debug(score);
             this.setTicker(score.format(config("format")), this.getHover(), command);
             this.incrementPos();
         } else if (this.ticker) {
@@ -70,7 +73,7 @@ export default class Manager {
 
     getHover(): string {
         const hoverContent : string[] = [];
-        console.log("getHover start");
+        console.debug("getHover start");
         if (config("hover") === "details") {
             hoverContent.push(this.currenScore().getDetail());
         } else if (config("hover") === "scoreboard") {
@@ -81,5 +84,26 @@ export default class Manager {
         hoverContent.push("\n");
         hoverContent.push(this.humanLastUpdated());
         return hoverContent.join("\n");
+    }
+
+    compareMatchDiff(oldScores: Score[], newScores: Score[]) {
+        var notification: string = "";
+        var oldScoreMap :Map<number, Score>;
+        oldScores.forEach((score: Score) => {
+            oldScoreMap.set(score.gameId, score);
+        });
+
+        newScores.forEach((score: Score) => {
+            if (oldScoreMap.has(score.gameId)) {
+                // same match, check update on score
+                var oldScore = oldScoreMap.get(score.gameId);
+                if (oldScore?.homeScore !== score.homeScore || oldScore.awayScore !== score.awayScore) {
+                    // add to notification
+                    notification += score.homeTeamName + " - " + score.awayTeamName + " " + "Goal\n";
+                }
+            }
+        });
+        
+        window.showInformationMessage(notification);
     }
 }

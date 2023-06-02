@@ -12,12 +12,12 @@ const HEADERS = {
 };
 
 export function fetchGameDetails(matchId: number): Promise<void | Detail[]> {
-    console.log("fetchGameDetails start...");
+    console.debug("fetchGameDetails start...");
     var url = baseURL + matchDetailsUrl + `matchId=${matchId}`;
-    console.log("url: " + url);
+    console.debug("url: " + url);
     return axios.get(url, { headers: HEADERS })
         .then(({ status, statusText, data }) => {
-            console.log(`GET ${url} ${status} ${statusText}`);
+            console.debug(`GET ${url} ${status} ${statusText}`);
             var events = data.header.events;
             // console.debug(events);
             if (!events) {
@@ -60,7 +60,7 @@ export function fetchGameDetails(matchId: number): Promise<void | Detail[]> {
             return details;            
         })
         .catch((error) => {
-            console.error(error); 
+            console.error(error);
         });
 }
 

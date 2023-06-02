@@ -17,7 +17,7 @@ export default class Score {
     urlLive: boolean;
 
     constructor(game: Game) {
-        // console.log(game);
+        // console.debug(game);
         this.gameId = game.id;
         this.homeScore = game.home.score;
         this.homeTeamName = game.home.name;
@@ -35,7 +35,7 @@ export default class Score {
     }
 
     format(formatString: string): string {
-        // console.log("format start: " + formatString);
+        // console.debug("format start: " + formatString);
         return formatString
             .replace(/\${vTeam}/gi, this.awayTeamName)
             .replace(/\${vScore}/gi, this.awayScore.toString(10))
@@ -60,7 +60,7 @@ export default class Score {
                 result += this.formatDetail(config("detailFormat"), element) + "\n";
             });
         }
-        // console.log(result);
+        // console.debug(result);
         return result;
     }
 }
