@@ -12,6 +12,12 @@
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "soccer",
+    "football",
+    "real time",
+    "sport"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/leungyukshing/SoccerLive.git"
